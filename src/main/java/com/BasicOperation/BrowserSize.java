@@ -25,4 +25,9 @@ public class BrowserSize extends BaseClass {
         driver.manage().window().setSize(new Dimension(Width, Height));
     }
 
+
+
+
+
+
 }

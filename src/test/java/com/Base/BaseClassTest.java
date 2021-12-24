@@ -3,44 +3,36 @@ package com.Base;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.opera.OperaDriver;
 
-
-public class BaseClass {
+public class BaseClassTest {
     public static WebDriver driver;
 
-    public static void main(String[] args) {
+    public static String Chrome = "Chrome";
 
-        chrome_launch();
-        open_URL("https://google.com");
-        chrome_close();
 
-        //edge_launch();
-        //open_URL();
-        //edge_close();
-
-        //opera_launch();
-        //open_URL();
-        //opera_close();
-
-    }
-
+    //Chrome
     public static void chrome_launch() {
         System.setProperty("webdriver.chrome.driver", "./src/main/resources/Drivers/chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
     }
 
-    public static void edge_launch() {
-        System.setProperty("webdriver.edge.driver", "./src/main/resources/Drivers/msedgedriver.exe");
-        driver = new EdgeDriver();
+    public static void open_URL(String URL) {
+        driver.get(URL);
+    }
+
+
+    public static void chrome_close() {
+        if (driver != null) {
+            driver.close();
+        } else {
+            System.out.println("Nothing to Close. No Browser found.");
+        }
 
     }
 
-    public static void opera_launch() {
-        System.setProperty("webdriver.opera.driver", "./src/main/resources/Drivers/operadriver.exe");
-        driver = new OperaDriver();
+    public static void chrome_quit() {
+        driver.quit();
     }
 
 
@@ -60,7 +52,6 @@ public class BaseClass {
     public static void clickOnElementByLinkText(String LinkText){
         driver.findElement(By.linkText(LinkText)).click();
     }
-
 
     //Clear Text filed
     public static void clearTextFieldByID(String id){
@@ -90,34 +81,35 @@ public class BaseClass {
         driver.findElement(By.cssSelector(Css)).sendKeys(value);
     }
 
-
-    public static void chrome_close() {
-        driver.close();
+    //Alert
+    public static void alertAccept(){
+        driver.switchTo().alert().accept();
+    }
+    public static void alertCancel(){
+        driver.switchTo().alert().dismiss();
+    }
+    public static void typeOnAlert(String text){
+        driver.switchTo().alert().sendKeys(text);
     }
 
-    public static void chrome_quit() {
-        driver.quit();
+    //Wait
+    public static void smallWait() throws InterruptedException {
+        Thread.sleep(3000);
+    }
+    public static void midWait() throws InterruptedException {
+        Thread.sleep(7000);
+    }
+    public static void longWait() throws InterruptedException {
+        Thread.sleep(10000);
+    }
+    public static void customWait(int MileSeconds) throws InterruptedException {
+        Thread.sleep(MileSeconds);
     }
 
 
-    public static void edge_close() {
-        driver.close();
-    }
-
-    public static void edge_quit() {
-        driver.quit();
-    }
-
-    public static void opera_close() {
-        driver.close();
-    }
-
-    public static void opera_quit() {
-        driver.quit();
-    }
-
-    public static void open_URL(String URL) {
-        driver.get(URL);
-    }
 
 }
+
+
+
+
