@@ -7,7 +7,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class BaseClassTest {
     public static WebDriver driver;
 
-    public static String Chrome = "Chrome";
+    public static String Chrome ="Chrome";
+    public static String Edge ="Edge";
+    public static String Opera ="Opera";
+
+
+    public static void open_URL(String URL) {
+        driver.get(URL);
+    }
 
 
     //Chrome
@@ -15,10 +22,6 @@ public class BaseClassTest {
         System.setProperty("webdriver.chrome.driver", "./src/main/resources/Drivers/chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-    }
-
-    public static void open_URL(String URL) {
-        driver.get(URL);
     }
 
 

@@ -1,48 +1,183 @@
 package com.Base;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.safari.SafariDriver;
 
 
 public class BaseClass {
     public static WebDriver driver;
 
-    public static void main(String[] args) {
+    public static String Firefox="Firefox";
+    public static String Chrome="Chrome";
 
-        chrome_launch();
-        open_URL("https://google.com");
-        chrome_close();
-
-        //edge_launch();
-        //open_URL();
-        //edge_close();
-
-        //opera_launch();
-        //open_URL();
-        //opera_close();
-
-    }
-
-    public static void chrome_launch() {
-        System.setProperty("webdriver.chrome.driver", "./src/main/resources/Drivers/chromedriver.exe");
-        driver = new ChromeDriver();
+    //Chrome
+    public static void chrome_launch(){
+        System.setProperty("webdriver.chrome.driver","./src/main/resources/Drivers/chromedriver.exe");
+        driver=new ChromeDriver();
         driver.manage().window().maximize();
     }
-
-    public static void edge_launch() {
-        System.setProperty("webdriver.edge.driver", "./src/main/resources/Drivers/msedgedriver.exe");
-        driver = new EdgeDriver();
+    public static void chrome_close(){
+        if(driver!=null){
+            driver.close();
+        }
+        else {
+            System.out.println("Nothing to Close. No Browser found.");
+        }
 
     }
+    public static void chrome_quit(){driver.quit();}
 
-    public static void opera_launch() {
-        System.setProperty("webdriver.opera.driver", "./src/main/resources/Drivers/operadriver.exe");
-        driver = new OperaDriver();
+    //Firefox
+    public static void firefox_launch(){
+        System.setProperty("webdriver.gecko.driver","./src/main/resources/Drivers/geckodriver.exe");
+        driver=new FirefoxDriver();
+    }
+    public static void firefox_close(){
+        driver.close();
+    }
+    public static void firefox_quit(){
+        driver.quit();
     }
 
+    public static WebDriver launchBrowser(String browser){
+        if(browser.equalsIgnoreCase("chrome")){
+            WebDriverManager.chromedriver().setup();
+            driver=new ChromeDriver();
+            driver.manage().window().maximize();
+        }
+        else if(browser.equalsIgnoreCase("firefox")){
+            WebDriverManager.firefoxdriver().setup();
+            driver=new FirefoxDriver();
+        }
+        else if(browser.equalsIgnoreCase("safari")){
+            WebDriverManager.safaridriver().setup();
+            driver=new SafariDriver();
+        }
+        else if(browser.equalsIgnoreCase("edge")){
+            WebDriverManager.edgedriver().setup();
+            driver=new EdgeDriver();
+        }
+        else if(browser.equalsIgnoreCase("opera")){
+            WebDriverManager.operadriver().setup();
+            driver=new EdgeDriver();
+        }
+        else {
+            System.out.println("Please Enter valid browser....");
+        }
+        return driver;
+    }
+    public static void closeBrowser(String browser){
+        if(browser.equalsIgnoreCase("chrome")){
+            if(driver!=null){
+                driver.close();
+            }
+            else {
+                System.out.println("Nothing to Close. No Browser found.");
+            }
+        }
+        else if(browser.equalsIgnoreCase("firefox")){
+            if(driver!=null){
+                driver.close();
+            }
+            else {
+                System.out.println("Nothing to Close. No Browser found.");
+            }
+        }
+        else if(browser.equalsIgnoreCase("safari")){
+            if(driver!=null){
+                driver.close();
+            }
+            else {
+                System.out.println("Nothing to Close. No Browser found.");
+            }
+        }
+        else if(browser.equalsIgnoreCase("edge")){
+            if(driver!=null){
+                driver.close();
+            }
+            else {
+                System.out.println("Nothing to Close. No Browser found.");
+            }
+        }
+        else {
+            System.out.println("Please Enter valid browser to close....");
+        }
+
+    }
+    public static void quitBrowser(String browser){
+        if(browser.equalsIgnoreCase("chrome")){
+            if(driver!=null){
+                driver.quit();
+            }
+            else {
+                System.out.println("Nothing to Close. No Browser found.");
+            }
+        }
+        else if(browser.equalsIgnoreCase("firefox")){
+            if(driver!=null){
+                driver.quit();
+            }
+            else {
+                System.out.println("Nothing to Close. No Browser found.");
+            }
+        }
+        else if(browser.equalsIgnoreCase("safari")){
+            if(driver!=null){
+                driver.quit();
+            }
+            else {
+                System.out.println("Nothing to Close. No Browser found.");
+            }
+        }
+        else if(browser.equalsIgnoreCase("edge")){
+            if(driver!=null){
+                driver.quit();
+            }
+            else {
+                System.out.println("Nothing to Close. No Browser found.");
+            }
+        }
+        else {
+            System.out.println("Please Enter valid browser to close....");
+        }
+
+    }
+    public static void open_URL(String url){
+        if(url==null){
+            System.out.println("URL is NULL!!!!");
+        }
+        if(url.indexOf("http")==-1){
+            System.out.println("http is missing..");
+        }
+        driver.get(url);
+    }
+
+
+    public static void locator_ID(String id){
+        driver.findElement(By.id(id));
+    }
+
+    public static void locator_Name(String Name){
+        driver.findElement(By.name(Name));
+    }
+
+    public static void locator_Xpath(String Xpath){
+        driver.findElement(By.xpath(Xpath));
+    }
+
+    public static void locator_Css(String Css){
+        driver.findElement(By.cssSelector(Css));
+    }
+
+    public static void locator_LinkText(String LinkText){
+        driver.findElement(By.linkText(LinkText));
+
+    }
 
     //Click on Element
     public static void clickOnElementBy_ID(String id){
@@ -58,9 +193,9 @@ public class BaseClass {
         driver.findElement(By.cssSelector(Css)).click();
     }
     public static void clickOnElementByLinkText(String LinkText){
+
         driver.findElement(By.linkText(LinkText)).click();
     }
-
 
     //Clear Text filed
     public static void clearTextFieldByID(String id){
@@ -90,34 +225,32 @@ public class BaseClass {
         driver.findElement(By.cssSelector(Css)).sendKeys(value);
     }
 
-
-    public static void chrome_close() {
-        driver.close();
+    //Alert
+    public static void alertAccept(){
+        driver.switchTo().alert().accept();
+    }
+    public static void alertCancel(){
+        driver.switchTo().alert().dismiss();
+    }
+    public static void typeOnAlert(String text){
+        driver.switchTo().alert().sendKeys(text);
     }
 
-    public static void chrome_quit() {
-        driver.quit();
+    //Wait
+    public static void smallWait() throws InterruptedException {
+        Thread.sleep(3000);
+    }
+    public static void midWait() throws InterruptedException {
+        Thread.sleep(7000);
+    }
+    public static void longWait() throws InterruptedException {
+        Thread.sleep(10000);
+    }
+    public static void customWait(int MileSeconds) throws InterruptedException {
+        Thread.sleep(MileSeconds);
     }
 
-
-    public static void edge_close() {
-        driver.close();
-    }
-
-    public static void edge_quit() {
-        driver.quit();
-    }
-
-    public static void opera_close() {
-        driver.close();
-    }
-
-    public static void opera_quit() {
-        driver.quit();
-    }
-
-    public static void open_URL(String URL) {
-        driver.get(URL);
-    }
 
 }
+
+

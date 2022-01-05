@@ -5,7 +5,7 @@ import com.Base.BaseClassTest;
 
 public class Login extends BaseClassTest {
     public static void main(String[] args) {
-        String Browser="Chrome";
+        String Chrome="Chrome";
         chrome_launch();
         open_URL("https://demo.opencart.com/index.php?route=account/login");
         Login_TC_001();
